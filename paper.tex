@@ -1,0 +1,471 @@
+% $Id: template.tex 11 2007-04-03 22:25:53Z jpeltier $
+
+\documentclass{vgtc}                          % final (conference style)
+%\documentclass[review]{vgtc}                 % review
+%\documentclass[widereview]{vgtc}             % wide-spaced review
+%\documentclass[preprint]{vgtc}               % preprint
+%\documentclass[electronic]{vgtc}             % electronic version
+
+%% Uncomment one of the lines above depending on where your paper is
+%% in the conference process. ``review'' and ``widereview'' are for review
+%% submission, ``preprint'' is for pre-publication, and the final version
+%% doesn't use a specific qualifier. Further, ``electronic'' includes
+%% hyperreferences for more convenient online viewing.
+
+%% Please use one of the ``review'' options in combination with the
+%% assigned online id (see below) ONLY if your paper uses a double blind
+%% review process. Some conferences, like IEEE Vis and InfoVis, have NOT
+%% in the past.
+
+%% Figures should be in CMYK or Grey scale format, otherwise, colour 
+%% shifting may occur during the printing process.
+
+%% These three lines bring in essential packages: ``mathptmx'' for Type 1 
+%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
+%% for proper handling of the times font family.
+
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{times}
+
+%\usepackage{amssymb,amsmath,amsthm}
+\usepackage{amssymb,amsmath}
+\usepackage[lined,linesnumbered]{algorithm2e}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{tikz}
+\usepackage{textcomp}
+%\usepackage{array}
+
+\usepackage{float}
+
+\usepackage{varwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Math commands
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand {\emath}[1]  {\ensuremath{#1}}
+\newcommand {\R}         {\emath{\mathbb{R}}}        % Real space
+\newcommand {\Real}[1]   {\emath{\mathbb{R}^{#1}}}   % Real space
+\newcommand {\Rd}        {\Real{d}}                  % R^d
+\newcommand {\Rdone}     {\Real{d+1}}                % R^d+1
+\newcommand {\Rk}        {\Real{k}}                  % R^k
+\newcommand {\Rtwo}      {\Real{2}}                  % R^2
+\newcommand {\Rthree}    {\Real{3}}                  % R^3
+\newcommand {\Rfour}     {\Real{4}}                  % R^4
+\newcommand {\Sphere}[1] {\emath{\mathbb{S}^{#1}}}   % Sphere
+\newcommand {\Sk}        {\Sphere{k}}                % S^k
+\newcommand {\Sd}        {\Sphere{d}}                % S^d
+\newcommand {\BB}        {\emath{\mathbb{B}}}        % B
+\newcommand {\Ball}[1]   {\emath{\mathbb{B}^{#1}}}   % B^{#1}
+\newcommand {\Ballep}    {\emath{B^{\epsilon}_{p}}}  % B^e_p
+\newcommand {\cl}        {\emath{\mathrm{cl}}}       % cl
+\newcommand {\cb}        {\emath{\mathbf{c}}}        % bold c
+\newcommand {\eb}        {\emath{\mathbf{c}}}        % bold e
+\newcommand {\tpi}       {\emath{\tilde{\pi}}}       % \pi~
+\newcommand {\gDim}[1]   {\emath{#1 \times #1 \times #1}} % DxDxD
+
+\newcommand {\tg}        {\emath{\tilde{g}}}
+\newcommand {\tn}        {\emath{\tilde{n}}}
+\newcommand {\IV}        {\emath{\mathcal{I_V}}}
+\newcommand {\Orth}      {\emath{\mathcal{O}}}
+\newcommand {\hN}        {\emath{\widehat{N}}}
+\newcommand {\XX}        {\emath{\mathcal{X}}}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}[proposition]
+\newtheorem{lemma}[proposition]{Lemma}
+
+%% We encourage the use of mathptmx for consistent usage of times font
+%% throughout the proceedings. However, if you encounter conflicts
+%% with other math-related packages, you may want to disable it.
+
+%% If you are submitting a paper to a conference for review with a double
+%% blind reviewing process, please replace the value ``0'' below with your
+%% OnlineID. Otherwise, you may safely leave it at ``0''.
+\onlineid{0}
+
+%% declare the category of your paper, only shown in review mode
+\vgtccategory{Research}
+
+%% allow for this line if you want the electronic option to work properly
+\vgtcinsertpkg
+
+%% In preprint mode you may define your own headline.
+%\preprinttext{To appear in an IEEE VGTC sponsored conference.}
+
+%% Paper title.
+
+\title{Automatic Stream Surface Generation From Selected Points of Interest}
+
+%% This is how authors are specified in the conference style
+
+%% Author and Affiliation (multiple authors with multiple affiliations)
+\author{Ross Vasko\thanks{e-mail: vasko.38@osu.edu} %
+\and Rephael Wenger\thanks{e-mail: wenger@cse.ohio-state.edu} %
+\and Han-Wei Shen\thanks{e-mail: hwshen@cse.ohio-state.edu }}
+\affiliation{\scriptsize The Ohio State University}
+
+%% A teaser figure can be included as follows, but is not recommended since
+%% the space is now taken up by a full width abstract.
+%\teaser{
+%  \includegraphics[width=1.5in]{sample.eps}
+%  \caption{Lookit! Lookit!}
+%}
+
+%% Abstract section.
+\abstract{
+Stream surfaces are a powerful visualization tool that can allow a user to easily understand how a region of a flow field behaves.
+Unlike streamlines, it is not enough to only select a starting location to generate a stream surface.
+A seeding curve must be defined in order to construct a stream surface.
+Manual construction of seeding curves is time consuming and relies on trial and error.
+Our research focuses on automatically generating stream surface seeding curves that accurately captures the behavior of a flow field around a point given by the user.
+The algorithm presented creates seeding curves so that the vectors in the flow along the seeding curve change minimally and so that the curve is orthogonal to the flow around the point of the interest.
+We additionally provide a method of filtering seeding curves based on similarity measurements from the Fr\'echet distance.
+Lastly, we present the effectiveness of our algorithm by automatically generating seeding curves on a number of synthetic and simulated data sets.
+} % end of abstract
+
+%% ACM Computing Classification System (CCS). 
+%% See <http://www.acm.org/class/1998/> for details.
+%% The ``\CCScat'' command takes four arguments.
+
+\CCScatlist{ 
+  \CCScat{I.3.3}{Picture/Image Generation}%
+{Stream surface}{};
+}
+
+%% Copyright space is enabled by default as required by guidelines.
+%% It is disabled by the 'review' option or via the following command:
+% \nocopyrightspace
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%% The ``\maketitle'' command must be the first command after the
+%% ``\begin{document}'' command. It prepares and prints the title block.
+
+%% the only exception to this rule is the \firstsection command
+\firstsection{Introduction}
+
+\maketitle
+
+The need to visualize flow arises through many different fields of science and engineering.
+Geometric techniques of flow field visualization such as streamlines and stream surfaces are common and powerful ways communicate the behavior of flow fields.
+
+Streamlines are curves that are tangent everywhere to a single timestep of the flow.
+Flow visualization with streamlines has the advantage that streamlines are straightforward to calculate and are relatively inexpensive to generate and render.
+A streamline can be generated by selecting a single point and then integrating through the flow field in order to find the unique curve through the chosen point that is tangent everywhere to the flow.
+However, streamlines are limited by the lack of contextual information that they provide.
+Streamlines only show the behavior of the flow from a single point.
+
+Stream surfaces are surfaces that are tangent everywhere to a single timestep of the flow.
+Using stream surfaces in flow visualization instead of streamlines helps solve a limitation from streamlines by integrating a ``seeding curve'' through the flow field instead of a single.
+A streamsurface is able to communicate structures in the flow more clearly than streamlines by showing how a larger region of flow moves together.
+The significant difficulty that can arise in using stream surface in flow visualization is choosing the seeding curve.
+
+A streamline is completely determined after choosing an initial starting location because there is a unique streamline generated from a single point.
+Choosing an initial starting location is not enough to define a stream surface.
+It is also necessary to choose the seeding curve through the starting location to integrate.
+
+Traditionally, stream surface seeding curves are single line segments that the user has to manually place through trial and error.
+This is a time consuming process that can often produce unsatisfying results due to the seeding curve only being a line segment. 
+A seeding curve that is not restricted to a single line segment can create a more powerful visualization because it can capture more complex structures of flow.
+However, manually constructing a seeding curve that is not a line segment and can accurately capture complex structures of flow is significantly more time consuming than placing a single line segment for a seeding curve.
+
+The research presented in this paper need described to automatically generate seeding curves that capture flow field features.
+Our work has the following contributions:
+\begin{enumerate}
+\item We define properties that are desirable in a stream surface seeding curve in order to create a ``natural'' stream surface (Section \ref{sec:motivation}).
+\item We describe a stream surface seeding algorithm that generates a set of surfaces that meet our definition of a natural seeding curve around a point of interest provide by the user (Section \ref{sec:algorithm}).
+\item We describe a method to filter a set of stream surfaces along a rake in order to only display the most distinct and descriptive stream surfaces (Section \ref{sec:filtering}).
+\end{enumerate}
+
+Section \ref{sec:results} provides examples of our algorithm on various data sets.
+We provide examples of stream surfaces generated on synthetic flow fields along with a case study on our method applied to a jet engine data set.
+
+%% \section{Introduction} 
+
+\section{Related Work}
+
+As previously discussed, two popular geometric methods of flow field visualization are streamlines and stream surfaces.
+Here we provide background on previous work done with both of these methods.
+For an overview of both of these methods, the reader is able to refer to the survey by McLoughlin et. al. \cite{McLoughlin2009}.
+
+\subsection{Streamline Visualization}
+
+A commonly addressed challenge in streamline visualization is properly sampling the domain with streamlines to receive a helpful visualization of the features desired by the viewer.
+
+One of the first methods of streamline placement was proposed by Turk and Banks \cite{Turk1996}.
+Their method uses energy functions on a filtered image of the streamlines to evenly space streamlines in 2D.
+Since then, streamline placement algorithms have advanced to 3D flow fields.
+
+Ye et. al. \cite{Ye} implement different seeding strategies around critical points in the flow field in order to capture the features of the flow field.
+Seeding points are considered by Chen et. al. \cite{Chen2007} and streamlines are seeded in varying densities around each seed point to retain information about the flow field.
+Xu et. al. \cite{Xu2010} use entropy measurements of the flow field and then seed streamlines based on this entropy measurements to preserve information about the flow field.
+Lee et. al. \cite{Lee2011} select streamlines based on view point evaluations and how streamlines occlude regions of interest.
+Streamlines along a rake are filtered based on similarity measurements by McLoughlin et. al. \cite{McLoughlin2013} to reduce clutter while preserving features shown by the streamlines along the rake.
+
+\subsection{Stream Surface Generation}
+
+Visualization with stream surfaces also introduces the challenges of properly generating a stream surface from a desired location.
+
+Hultquist \cite{Hultquist} introduced a method of stream surface generation that involves an advancing front.
+In the method by Hultquist, a rake is advanced through the flow field while points are added or removed based on the distance between the points on the rake.
+Triangles are then added between the points in order to create a surface that approximates the surface that is tangent everywhere to the flow.
+Stream surfaces are generated implicitly using isosurfaces by Van Wijk \cite{Wijk}.
+Scheuermann et. al. \cite{Scheuermann} described a method for generating stream surfaces with flow fields defined on tetrahedral grids.
+Garth et. al. \cite{Garth2004} presents a method to obtain surfaces that can better represent features in complicated regions of flow.
+Stream surfaces that approach critical points are more accurately constructed by the approach of Schneider et. al. \cite{Schneider2010} by considering the flow topology at the critical point.
+
+For a more complete overview on stream surface generation and other challenges with stream surfaces such as occlusion and peception issues, the reader is able to refer to a survey by Edmunds et. al. \cite{Edmunds2012b}.
+
+\subsection{Automatic Stream Surface Seeding Curve Generation}
+
+Compared to other aspects of stream surfaces, there has been considerably less work done on the automatic generation of stream surfaces seeding curves.
+
+Edmunds et. al. \cite{Edmunds2012} create stream surface seeding curves from the isocontours on domain boundaries.
+Seeding curves are generated by Barto{\v{n}} et. al. \cite{Barton2015} by solving for a seeding curve that is distorted a minimal amount as it is intergrated through the flow field.
+The flow map is considered by Brambilla and Hauser \cite{Brambilla2015} to find a seeding curve that will generate a stream surface consisting of streamlines that travel in a similar direction.
+
+Notably, some automatic stream surface generation algorithm also automatically choose a starting point.
+The following methods require minimal interaction from the user when attempting to generate stream surfaces that describe the flow field.
+Peikert and Sadlo \cite{Peikert2009} automatically construct seeding curves that correspond to stream surfaces that accurately represent topological flow features.
+Edmunds et. al. \cite{Edmunds2012a} cluster vectors based on parameters given by the user that describe various regions of flow.
+Seeding curves are then generated from the points resulting from the clustering algorithm by integrating through the curl field.
+The flow field is densely sampled with stream ribbons by Esturo et. al. \cite{Esturo2013} in order to find descriptive stream surfaces.
+The quality of each stream ribbon is evaluated and then a single seeding curve that generates an optimal stream surface is approximated by connecting line segments from high quality stream ribbons.
+This method was expanded on by Schulze et. al. \cite{Schulze2014} to generate multiple stream surfaces rather than a single, optimal surface.
+
+\section{Background and Motivation} \label{sec:motivation}
+
+The following notation for a flow field will be used through the paper.
+Consider a steady flow field $f:D\rightarrow\Real3$ where $D\subset\Real3$ and $f$ is differentiable everywhere.
+Let $f(x)$ denote the vector value of $f$ at position $x$ and let $J(x)$ denote the Jacobian matrix of $f$ at position $x$.
+Here we present a method to automatically generate multiple stream suface seeding curves around a point of interest chosen in $D$.
+
+Suppose a user selects a point $p$ in $D$ in order to visualize the flow of $f$ near $p$.
+Visualizing a single streamline through $p$ or multiple streamlines in a region around $p$ is straightforward.
+Integration can be performed through the flow field beginning at the selected points and streamlines can be generated for the user to view.
+
+Now consider the steps required to visualize the flow near point $p$ using stream surfaces.
+Traditionally, generating a stream surface requires choosing an initial seeding curve.
+Various techniques can be used to integrate this intial curve and construct a stream surface. 
+The requirement of this initial seeding curve makes flow visualization with stream surfaces significantly more difficult than with streamlines.
+
+Each point in $D$ has a determined streamline that passes through it, so the user is only required to choose a single point of interest.
+This is not true for stream surfaces.
+There is an infinite number of stream surfaces that intersect a single point and an infinite amount of seeding curves that generate a single stream surface.
+The infinite number of choices available makes the automatic generation of stream surfaces difficult.
+To help aid in the automation of stream surface generation, our algorithm attempts to generate a unique seeding curve from a given point.
+
+Given a point $p$, our algorithm attempts to select a natural initial seeding curve for the stream surface in order to reduce the infinite number of curves to a single deterministic curve.
+Our seeding curve generation algorithm begins at the point $p$ and advances through the flow field to generate the seeding curve.
+At each step, a local inspection is performed to find the direction to advance the seeding curve in.
+The steps of the local inspection that we perform are motivated by the following desirable properties of a stream surface seeding curve:
+\begin{enumerate}
+\item Vectors along the seeding curve are similar.
+\item The seeding curve is in the plane that contains point $p$ and is orthogonal to $f(p)$.
+\end{enumerate}
+
+Property 1 is established to help extract a ``natural'' stream surface.
+It is reasonable to expect the vectors along the seeding curve to exhibit some amount of similarity and to not change abruptly.
+More specifically, at a point $q$, the seeding curve chooses a direction to advance in that minimizes the change to $f(q)$ by considering the Jacobian matrix J(q).
+
+Property 2 is establisted to help prevent the creation of degenerate surfaces.
+The stream surface created by a seeding curve that is nearly tangent to the flow can create degenerate surfaces.
+In order to ensure that the stream surface around $p$ does not collapse to degenerate surfaces, we restrict the seeding curve to stay in the plane that contains point $p$ and is orthogonal to $f(p)$.
+
+Examples further motivating why these properties are desirable in a stream surface seeding curve are given in section ??
+The detailed steps of our algorithm considering the steps for the local inspect is given in \ref{ssec:next_direction}.
+
+Note that our method currently requires a starting point of interest to be supplied from the user.
+We do not identify locations to begin the seeding curves, we only generate seeding curves that attempt to capture flow field features from a single point supplied by the user.
+Although, once this point of interest is supplied, the algorithm will be able to proceed without further assistance to generate stream surfaces.
+
+\section{Automatice Stream Surface Generation Algorithm}  \label{sec:algorithm}
+
+\subsection{Choosing the next direction for the seeding curve} \label{ssec:next_direction}
+
+Given a point $p$ in the flow field, let $v$ denote $f(p)$ and let $\Pi$ denote the plane that contains $p$ and has the normal $v$.
+We will describe how to choose the direction $e$ to advance the seeding curve from point $p$.
+
+As mentioned previously, we attempt to choose a direction for the seeding curve so that the vectors along the seeding curve are similar and so that the seeding curve is contained in $\Pi$.
+We use the Jacobian at $p$ to find the direction that we can advance in that will produce the minimum amount of change on the vector located at $p$ in a direction orthogonal to $v$.
+To formulate this minimization, first let the matrix $M = (J(p_j^k))^TJ(p)$.
+The unit vector e that minimizes $e^TM e$ where $e$ is restricted to be in the plane $\Pi$ is the direction that we will advance the seeding curve in.
+
+We use singular value decomposition (SVD) and the results from \cite{Klein2012} to solve this minimization.
+From SVD, let $M = U\Sigma U^T$.
+Note that there exist a rotation matrix $U$ and a diagonal matrix $\Sigma$ that allow for the above equality because M is positive definite.
+The solution set, $\mathcal{E}$, to $x^T\Sigma x = 1$ is the axis aligned ellipsoid that is the solution set to $x^TMx = 1$.
+It is currently necessary to ensure that $\mathcal{E}$ is axis aligned because we can only apply the results from \cite{Klein2012} to ellipsoids that are axis aligned.
+Additionally, let $n$ be $U^Tv$ unitized.
+We define a new plane $\Pi^\prime$ that contains $p$ and has the normal $n$.
+The rotation operation is applied to the plane to preserve how the plane intersects $\mathcal{E}$.
+
+From \cite{Klein2012}, we can solve two possible directions $e_1$ and $e_2$ which define the principal axes of the 2D ellipse that is defined by the intersection of $\Pi^\prime$ and $\mathcal{E}$.
+As described in \cite{Klein2012} to solve for $e_1$ and $e_2$, first find arbitrary unit vectors $\tilde{e_1}$ and $\tilde{e_2}$ so $\tilde{e_1} \cdot n = 0$ and $\tilde{e_2} = n  \times \tilde{e_1}$.
+We can then solve that
+\begin{displaymath}
+e_1 = \cos \omega \tilde{e_1} + \sin \omega \tilde{e_2}
+\end{displaymath}
+\begin{displaymath}
+e_2 = -\sin \omega \tilde{e_1} + \cos \omega \tilde{e_2}
+\end{displaymath}
+where
+\begin{displaymath}
+\omega = \frac{1}{2}\arctan(\frac{2 \cdot \tilde{e_1}^T\Sigma \tilde{e_2}}{\tilde{e_1}^T\Sigma \tilde{e_1} - \tilde{e_2}^T\Sigma \tilde{e_2}})
+\end{displaymath}
+
+We define $e^\prime$ to be the direction that corresponds with the smallest of the two values $e_1^T\Sigma e_1$ and $e_2^T\Sigma e_2$.
+Finally, let $e = U e^\prime$ so that $e$ properly minimizes the original formulation.
+The direction defined by $e$ is now what we define the optial direction to continue the seeding curve in.
+
+\subsection{Advancing the Seeding Curve}
+
+The seeding curve begins at a given point $p$.
+Let $\Pi$ be the plane that contains $p$ and has normal $f(p)$ and let $\lambda$ be a predefined step length.
+We extend the seeding curve in both a forward direction and a backward direction.
+Let the initial backward direction be labeled $e_1^0 = -e$ and let the initial forward direction be labeled $e_1^1 = e$.
+Additionally, let the $k^{th}$ point that belongs to the seeding curve extended in the backward direction be denoted as $p_0^k$ and let the $k^{th}$ point that belongs to the seeding curve extended in the forward direction be denoted as $p_1^k$ where $p_0^0 = p$ and  $p_1^0 = p$.
+
+We continue to advance each direction of the seeding curve simultaneously.
+An optimal direction to advance in is given by solving for the unit vector $e_k^j$ that minimizes $(e_k^j)^TM e_k^j$ where M = $(J(p_j^k))^TJ(p_j^k)$, for $j = 0$ and $j = 1$, where $e_k^j$ is restricted to the plane that contains $p$ and is orthogonal to the vector $f(p)$.
+Note that if $e_k^j \cdot e_{k - 1}^j < 0$, we flip the direction of $e_k^j$ to prevent the seeding curve from reversing direction.
+Additionally, if $e_k^j \cdot e_{k - 1}^j < \cos(45^\circ)$, we continune in the previous direction and assign $e_k^j$ to be  $e_{k - 1}^j$.
+We then assign the $k^{th}$ point in the respective seeding curve directions to be $p_k^j = \lambda e_k^j + p_{k - 1}^j$.
+We continue this process until we meet one of the termination conditions described in the following section.
+
+\subsection{Terminating the Seeding Curve }
+
+As previously described, the seeding curve extends in a forward direction and a backward direction.
+The following termination conditions (1 through 3) only terminate the direction of the seeding curve that generated a point $p_k^j$ on the $k{^th}$ step that violated the condition for $j = 0$ and $j = 1$.
+\begin{enumerate}
+\item{$p_k^j$ is not in the domain $D$.}
+\item{$f(p_k^j)$ has a magnitude of zero.}
+\item{For $i = (k-4)$ through $i = k$, the directions $e_i^j$ were forced to be the same from the condition imposed on the angle between consecutive directions of the seeding curve.}
+\end{enumerate}
+
+Justification for conditions 1 and 2 is straightforward.
+Condition 3 comes from the seeding curve being in an unstable region of the flow field.
+It is undesirable for the seeding curve to change directions drastically, but if we continue moving in the same direction to avoid changing directions drastically, we are actually then moving closer to a direction with maximal change.
+Therefore, if we terminate a direction of the seeding curve from condition 3, we remove the last five points inserted to the seeding curve.
+
+The final termination conditions (4 and 5) consider the winding angle of the curve.
+The seeding curve is entirely contained in one plane so the plane normal can be used to compute the winding angle.
+We are able to calculate the winding angle of direction $j$ with $k$ points with the following formula:
+\begin{displaymath}
+\Phi(j, k) = \sum_{i = 1}^{k - 1} \arcsin(f(p)\cdot(e_i^j \times e_{i + 1}^j))
+\end{displaymath}
+The winding angle of the entire seeding curve can then be computed with the formula:
+\begin{displaymath}
+\Phi = -\Phi(0, m) + \Phi(1, n) + \arcsin(f(p)\cdot(-e_1^0 \times e_1^1)
+\end{displaymath}
+
+If either of the following conditions occur, then the generation of the entire curve terminates.
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item{The absolute value of the winding angle calculated from the entire seeding curve exceeds $360^\circ$, or $\left|\Phi\right| > 360^\circ$.}
+\item{The absolute value of the winding angle calculated from either direction of the seeding curve exceeds $270^\circ$, or $\left|\Phi(0, m)\right| > 270^\circ$ or $\left|\Phi(1, n)\right| > 270^\circ$.}
+\end{enumerate}
+
+The winding angle is used to determine when the seeding curve has completed a revolution and to prevent the stream surface from occluding itself.
+Condition 4 represents the condition in which the forward and backward directions of the seeding curve both wrap.
+Condition 5 represents the condition in which the a single direction of the seeding curve has been extended too far beyond the original seed point.
+It is undesirable for one side of the seeding curve to extend too far due to both error that can accumlate and that the end of the seeding curve could be representing an entirely different feature.
+
+\subsection{Generating Multiple Seeding Curves Around a Point}
+
+We also consider generating multiple seeding curves around point $p$ to capture additional behavior around the point of interest.
+The additional seeding curves are generated from a rake of seeding points around $p$.
+The user supplies a half of the rake length, $\alpha$, and the number of points on one side of the rake, $n$.
+After calculating the optimal direction to move, $e$, from point $p$, we calculate a new direction $e^\prime = f(p) \times e$ and then force $e^\prime$ to be unit vector.
+There will be $2n + 1$ points in total along this rake of points.
+The $k^{th}$ point where $k \in [0, 2n]$ is given by the following formula:
+\begin{displaymath}
+p_k = \alpha \cdot \frac{n - k}{n} e^\prime + p
+\end{displaymath}
+See that points $p_0$ and $p_{2n}$ are the endpoints of the rake with a distance of $\lambda$ from $p$ and point $p_n$ is point $p$ itself.
+
+A seeding curve is then generated from each point $p_k$ where $k \in [0, 2n]$ as described in the previous section.
+A minor adjustment made to the seeding algorithm is that all $2n + 1$ seeding curves are restricted to be in same plane that contains the seeding curve from point $p$.
+All seeding points are already in the plane that contains the seeding curve from $p$, so the only adjustment that needs to be made is to use the vector $f(p)$ whenever a plane normal is to be used, rather than the value of $f(p_k)$.
+
+\subsection{Generating the Stream Surface}
+
+Once the $N$ rake points are determined and a seeding curve has been generated from each point, standard stream surface algorithms can be used to integrate the seeding curve through the flow field.
+In our implementation, we simply seed a streamline from each of the sampled points along the curve and then connect the adjacent streamlines with quads under conditions in which the streamlines are within a certain distance from each other.
+Although, once the seeding curve is defined, any stream surface algorithm that begins from a seeding curve can be used in place.
+
+\section{Filtering Stream Surfaces Along a Rake} \label{sec:filtering}
+
+Although our algorithm generates seeding curves so that ``natural'' surfaces are captured, the initial seeding points for each curve are placed in a na\"ive, dense sampling along a line segment through the initial point of interest, as previously described.
+This na\''ive placement of these seeding points can create many stream surfaces that only provide redundant information.
+We introduce a filtering step at the end of our algorithm to reduce the visual clutter while still retaining important flow field information.
+
+\subsection{Filtering With the Discrete Fr\'echet Distance}
+
+We measure the similar of curves using the discrete Fr\'echet distance \cite{eiter1994computing}.
+The discrete Fr\'echet distance is a measurement of similarity that considers the order of points in that define the curve.
+Our filtering algorithm uses the discrete Fr\'echet distance to approximate the similarity between stream surfaces in order to determine which surfaces to remove from the visualization while still retaining important information.
+We make a modification to the discrete Fr\'echet distance by allowing one of the curves to be truncated after any point in the curve.
+We truncate one of the curves at the point such that the truncated curve and the other complete curve discrete Fr\'echet distance over all possible points.
+The truncated discrete Fr\'echet distance of two curves, $a$ and $b$, is denoted as $F(a, b)$.
+
+Given $n$ points $(p_1, p_2, ... , p_n)$ along the seeding rake, let $(c_1^+, c_2^+, ... , c_n^+)$ and $(c_1^-, c_2^-, ... , c_n^-)$ be the seeding curves generated from each point in the positive and negative directions, respectively.
+Let $(s_1^+, s_2^+, ... , s_n^+)$ and $(s_1^-, s_2^-, ... , s_n^-)$ be the streamlines seeded from each point and integrated in the foward and positive direction, respectively.
+We denote the similarity between two of these curves with
+\begin{displaymath}
+F^\prime(a, i, j) = \max \left\{F(a_i^+, a_j^+), F(a_i^-, a_j^-)\right\} - d(p_i, p_j)
+\end{displaymath}
+where $d(p, q)$ is the Euclidean distance between two points p and q.
+Finally, our estimate of similarity between two stream surfaces generated from points $p_i$ and $p_j$ is denoted as:
+\begin{displaymath}
+S(i, j) = \alpha F^\prime(c, i, j) + (1 - \alpha) F^\prime(s, i, j)
+\end{displaymath}
+where $\alpha \in [0, 1]$.
+
+Considering these definitions and similarity measurements, we now construct a vector, $V$, of $n - 1$ elements in order to identify which surfaces to filter from the visualization.
+From $k = 1$ to $k = (n - 1)$, we define $V_k = S(k, k + 1)$.
+Let $\mu$ be the average of the values of $V$ and let $\sigma$ be the standard deviation.
+Now we construct a vector $W$ of size $m$ where $2 \leq m \leq n$ that represents the similar ranges of stream surfaces.
+The values of $W$ are strictly increasing and $i$ is an element of $W$ if and only if $V_{i - 1} > \mu + \beta \cdot \sigma$ or if $i$ is $1$ or $n$.
+Typically $\beta$ is set to $1$.
+
+The vector $W$ is then used in order to determine which surfaces to include in the visualizaiton.
+A single surface is chosen to represent the surfaces in the range of each pair $(W_k, W_{k + 1})$.
+Let the function that indentifies the stream surface represent the pair $(W_k, W_{k + 1})$ be defined as
+\begin{displaymath}
+T(k) = \inf_{j \in [W_k, W_{k + 1}]} \left\{ \max \left\{ S(j, W_k), S(j, W_{k+1}) \right\} \right\}
+\end{displaymath}
+The final stream surfaces that are included in the visualization are given by $T(k)$ from $k = 1$ to $k = (m - 1)$.
+
+\section{Results} \label{sec:results}
+
+\subsection{Motivating example}
+
+\subsection{Synthetic Flow Fields}
+
+\subsection{Case Study: Jet Engine Simulation}
+
+\section{Discussion and Limitations}
+
+We would ideally perform a global inspection of the flow field to ensure that each stream surface we extract is truly a single descriptive feature.
+However, performing a global inspection in such a manner for a 3D flow field will be far too computationally intensive to perform for data sets of any significant size on a personal computer.
+Therefore, we perform a local inspection along the seeding curve in order to best approximate where to place seeding curves that capture single unique flow features.
+
+
+\bibliographystyle{abbrv}
+%%use following if all content of bibtex file should be shown
+%\nocite{*}
+\bibliography{bibliography}
+\end{document}
